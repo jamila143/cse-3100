@@ -11,6 +11,8 @@ const availableCats = [
 
 export default function AvailableCats() {
   const [cats, setCats] = useState([]);
+  const [filter, setFilter] = useState(''); // Breed filter
+  const [search, setSearch] = useState(''); // Search by name
 
   useEffect(() => {
     const fetchCatImages = async () => {
@@ -34,13 +36,44 @@ export default function AvailableCats() {
     fetchCatImages();
   }, []);
 
+  const filteredCats = cats.filter(
+    (cat) =>
+      (filter ? cat.breed === filter : true) &&
+      cat.name.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
     <section className="text-center mt-4">
       <h2>Available Cats</h2>
       <p>Meet our adorable cats looking for their forever home!</p>
 
+      {/* Filter and Search */}
+      <div className="filters d-flex justify-content-center mt-3">
+        <select
+          onChange={(e) => setFilter(e.target.value)}
+          className="form-select me-3"
+          style={{ maxWidth: '200px' }}
+        >
+          <option value="">All Breeds</option>
+          <option value="Sphynx">Sphynx</option>
+          <option value="Peterbald">Peterbald</option>
+          <option value="Birman">Birman</option>
+          <option value="Abyssinian">Abyssinian</option>
+          <option value="Persian">Persian</option>
+          <option value="Siamese">Siamese</option>
+        </select>
+        <input
+          type="text"
+          placeholder="Search by name"
+          className="form-control"
+          style={{ maxWidth: '300px' }}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </div>
+
+      {/* Display Filtered Cats */}
       <div className="mt-4 row g-4 cats-container" id="cats-container">
-        {cats.map((cat, i) => (
+        {filteredCats.map((cat, i) => (
           <div key={i} className="col-md-4">
             <div
               className="cat-card"
@@ -69,16 +102,27 @@ export default function AvailableCats() {
                 style={{
                   padding: '8px 0',
                   textAlign: 'center',
-                  fontSize: '12px', // Reduced font size
-                  lineHeight: '1.2', // Adjusted line height for tighter spacing
-                  minHeight: '60px', // Constrained height of the text box
+                  fontSize: '12px',
+                  lineHeight: '1.2',
+                  minHeight: '60px',
                 }}
               >
-                <h3 className="h6 mb-1" style={{ fontSize: '14px', fontWeight: 'bold' }}>
+                <h3
+                  className="h6 mb-1"
+                  style={{ fontSize: '14px', fontWeight: 'bold' }}
+                >
                   {cat.name}
                 </h3>
-                <p className="mb-1"style={{  color: 'black' }}>Age: {cat.age}</p>
-                <p className="mb-0" style={{ fontStyle: 'italic', color: 'black' }}>
+                <p className="mb-1" style={{ color: 'black' }}>
+                  Age: {cat.age}
+                </p>
+                <p
+                  className="mb-0"
+                  style={{
+                    fontStyle: 'italic',
+                    color: 'black',
+                  }}
+                >
                   Breed: {cat.breed}
                 </p>
               </div>
