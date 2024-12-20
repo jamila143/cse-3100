@@ -132,4 +132,5 @@ export default function AvailableCats() {
       </div>
     </section>
   );
+
 }
