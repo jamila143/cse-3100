@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 const availableCats = [
-  { name: 'Whiskers', age: '2', breed: 'Sphynx' },
+  { name: 'Whiskerse', age: '2', breed: 'Sphynx' },
   { name: 'Mittens', age: '2', breed: 'Peterbald' },
   { name: 'Shadow', age: '1', breed: 'Birman' },
   { name: 'Pumpkin', age: '3', breed: 'Abyssinian' },
